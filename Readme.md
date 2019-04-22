@@ -39,7 +39,7 @@ This command will guide you through filling the information needed to configure 
 ```
 mkdir rclone
 touch rclone/rclone.conf
-docker run \
+docker run -it \
     -v $(pwd)/rclone:/root/.config/rclone \
     --rm cminor/rclone config
 ```
@@ -47,14 +47,14 @@ docker run \
 ### Copying a file to a remote storage provider
 For this example we will assume you already have gone through the configuration process as described above, and as a result you have a `rclone/rclone.conf` file which contains the configuration of a remote, lets say `gdrive`.
 
-If you want to copy a file `test.txt` from a folder called `/tmp/data` to your Gdrive folder `Data`
+If you want to copy the file `LICENSE.md` from the current folder  to your Gdrive folder `Data`
 then you need to volume mount the folder to the container so that the container is aware of it, and then just copy it:
 ```
 docker run \
     -v $(pwd)/rclone:/root/.config/rclone \
-    -v /tmp/data:/data \
+    -v $(pwd)/:/data \
     --rm cminor/rclone \
-    copy /data/test.txt gdrive:Data
+    copy /data/LICENSE.md gdrive:Data
 ```
 
 ## To extend this image
